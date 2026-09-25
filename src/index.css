@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  scroll-timeline: auto;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #000000 !important;
+  color: #e4e4e7 !important;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent layout thrashing on animated elements */
+.transform-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@layer base {
+  :root {
+    --bg-base: #000000;
+    --bg-surface: #090a0f;
+    --bg-card: #0d0e14;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Hard-lock all body text to Geist */
+  *, *::before, *::after {
+    font-family: 'Geist', sans-serif !important;
+  }
+
+  /* Hard-lock all headings and display titles to Plus Jakarta Sans */
+  h1, h2, h3, h4, h5, h6,
+  .font-display,
+  [data-slot="header"],
+  [data-slot="title"] {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    letter-spacing: -0.03em !important;
+    color: #ffffff !important;
+  }
+
+  /* Hard-lock all formulas, IP addresses, packet fields, code, and telemetry to JetBrains Mono */
+  code, pre, kbd, samp, var,
+  .font-mono,
+  .telemetry,
+  .metric-badge,
+  [data-mono="true"] {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-feature-settings: "zero" 1;
+  }
+}
+
+/* =================================================================== */
+/* UNIVERSAL HARD-LOCK GLOBAL OVERRIDES (Preempts Tailwind Reset)     */
+/* =================================================================== */
+*, *::before, *::after {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.font-display,
+[data-slot="header"],
+[data-slot="title"] {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  letter-spacing: -0.03em !important;
+  color: #ffffff !important;
+}
+
+code, pre, kbd, samp, var,
+.font-mono,
+.telemetry,
+.metric-badge,
+[data-mono="true"] {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-feature-settings: "zero" 1;
+}
+
+/* Custom monochrome scrollbar for HUD terminal experience */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Grid & HUD Texture patterns */
+.hud-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.hud-dots-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* High-performance obsidian surface primitives */
+.hud-glass-panel {
+  background-color: #090a0f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hud-glass-card {
+  background-color: #0d0e14;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hud-glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
