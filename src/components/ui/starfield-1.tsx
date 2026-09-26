@@ -51,8 +51,9 @@ export function Starfield({
 
     const initStars = () => {
       stars.length = 0;
-      const curWidth = width || window.innerWidth || 1920;
-      const curHeight = height || window.innerHeight || 1080;
+      const el = canvasRef.current?.parentElement;
+      const curWidth = width || el?.clientWidth || window.innerWidth || 800;
+      const curHeight = height || el?.clientHeight || window.innerHeight || 600;
       maxDepth = Math.max(curWidth, curHeight, 1000);
       for (let i = 0; i < quantity; i++) {
         const x = (Math.random() - 0.5) * curWidth * 2;
@@ -69,15 +70,18 @@ export function Starfield({
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      const newWidth = window.innerWidth;
-      const newHeight = window.innerHeight;
+      const el = canvasRef.current?.parentElement;
+      const newWidth = el?.clientWidth || window.innerWidth || 800;
+      const newHeight = el?.clientHeight || window.innerHeight || 600;
       if (width !== newWidth || height !== newHeight) {
         width = newWidth;
         height = newHeight;
         maxDepth = Math.max(width, height, 1000);
         canvas.width = Math.round(width * dpr);
         canvas.height = Math.round(height * dpr);
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (ctx) {
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
         if (stars.length === 0) {
           initStars();
         }
@@ -136,6 +140,7 @@ export function Starfield({
     };
 
     const draw = () => {
+      if (!ctx || width <= 0 || height <= 0) return;
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, width, height);
 
@@ -214,7 +219,7 @@ export function Starfield({
     <div
       ref={containerRef}
       className={cn(
-        "fixed inset-0 pointer-events-none z-0 transform-gpu will-change-transform [contain:paint]",
+        "fixed inset-0 pointer-events-none z-0 transform-gpu will-change-transform",
         className
       )}
     >

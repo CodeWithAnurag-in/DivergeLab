@@ -17,20 +17,20 @@ export default function App() {
   const [showNavRail, setShowNavRail] = useState<boolean>(false);
 
   useEffect(() => {
-    // 1. Tell the browser not to restore previous scroll position
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
+    try {
+      if (typeof window !== "undefined" && "history" in window && "scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+    } catch {
+      // Safari private mode / strict context fallback
     }
 
-    // 2. Force instant jump to absolute top on fresh load/refresh
-    window.scrollTo(0, 0);
+    // Instant cross-browser scroll reset to top
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+    }, 10);
 
-    const handleBeforeUnload = () => {
-      window.scrollTo(0, 0);
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {

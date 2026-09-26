@@ -23,6 +23,10 @@ const LayerSlab: React.FC<SlabProps> = ({ label, title, fields, y, z, rotateX, o
         z,
         rotateX,
         opacity,
+        WebkitBackfaceVisibility: "hidden",
+        backfaceVisibility: "hidden",
+        WebkitTransformStyle: "preserve-3d",
+        transformStyle: "preserve-3d",
       }}
       className={`absolute w-full h-full flex flex-col p-4 rounded-xl transition-colors duration-300
         transform-gpu will-change-transform [backface-visibility:hidden]
@@ -149,7 +153,14 @@ export default function DeconstructedPacketHero() {
 
         {/* 3D Perspective Assembly */}
         <motion.div 
-          style={{ opacity: globalOpacity, transformStyle: 'preserve-3d', willChange: 'transform' }}
+          style={{
+            opacity: globalOpacity,
+            perspective: "1000px",
+            WebkitPerspective: "1000px",
+            transformStyle: "preserve-3d",
+            WebkitTransformStyle: "preserve-3d",
+            willChange: "transform",
+          }}
           className="relative z-10 w-80 sm:w-96 h-48 flex items-center justify-center [perspective:1000px]"
         >
           {/* Connector Lines (SVG) */}

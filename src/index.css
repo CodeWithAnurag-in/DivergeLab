@@ -3,23 +3,24 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-timeline: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
-  overflow-x: hidden;
   background-color: #000000 !important;
   color: #e4e4e7 !important;
+  overflow-x: hidden;
   text-rendering: optimizeSpeed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Prevent layout thrashing on animated elements */
+/* WebKit-Safe GPU Acceleration */
 .transform-gpu {
-  transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  perspective: 1000px;
 }
 
 @layer base {
